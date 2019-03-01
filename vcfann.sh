@@ -1,5 +1,8 @@
 #!/bin/bash
 # Annotate VCF file with snpEff using library built on RCRS references.
+
+. ./conf.sh
+
 help=$(cat << EOF
 
 Usage: ./`basename $0` id
@@ -12,6 +15,7 @@ EOF
 if [ -z $1 ] ; then
   echo "Sample ID is required! $help" && exit 1;
 fi
+
 #Initiate
 id=$1
 
@@ -37,7 +41,7 @@ cat ${id}.tmp.vcf | sed "s/^NC_012920.1/NC_012920/" > ${id}2.tmp.vcf
 
 # Annotating vcf
 echo -e "\n`date '+%T %d/%m/%Y'`: annotating vcf with snpEff" | tee -a $id.log
-java -jar /mnt/data/snpEff/snpEff.jar RCRS ${id}2.tmp.vcf >${id}.vcf
+java -jar ${path[snpeff]} RCRS ${id}2.tmp.vcf >${id}.vcf
 
 # Cleaning tmp files
 rm -rf *.tmp.*

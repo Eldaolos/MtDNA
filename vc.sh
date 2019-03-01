@@ -1,6 +1,7 @@
 #!/bin/bash
 # variant calling 
 
+. ./conf.sh
 
 help=$(cat << EOF
 
@@ -24,17 +25,6 @@ refid=${2:-hg19}
 if [[  $refid !=  @(hg19|RCRS|RSRS)  ]] ; then
   echo "Unknown reference ID. $help" && exit 1;
 fi
-
-declare -A REF=(
-  [hg19]='/mnt/data/ref/hg19.fa'
-  [RCRS]='/mnt/data/references/RCRS.fa'
-  [RSRS]='/mnt/data/references/RSRS.fa')
-
-declare -a path=(
-  [fb]='/PIPELINE/SOFTWARE/freebayes/bin/freebayes'
-  [pc]='/mnt/data/picard/build/libs/picard.jar'
-  [gatk]='/mnt/data/gatk/gatk' 
-)
 
 isok () {
   if [ $1 -ne 0 ]; then

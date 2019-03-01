@@ -3,6 +3,8 @@
 # The input files (prefix_{1,2}.fastq.gz) should be in the current folder.
 # The output prefix.bam is saved in the the same folder. 
 
+. ./conf.sh 
+
 help=$(cat << EOF
 
 Usage: ./`basename $0` id ref
@@ -12,7 +14,6 @@ Usage: ./`basename $0` id ref
 
 EOF
 )
-
 # Check input
 if [ -z $1 ] ; then
   echo "Sample ID is required! $help" && exit 1;
@@ -28,10 +29,6 @@ fi
 
 cpu=$(nproc --all)
 
-declare -A REF=(
-  [hg19]='/mnt/data/ref/hg19.fa'
-  [RCRS]='/mnt/data/references/RCRS.fa'
-  [RSRS]='/mnt/data/references/RSRS.fa')
 
 isok () {
   if [ $1 -ne 0 ]; then
